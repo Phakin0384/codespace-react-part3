@@ -1,5 +1,5 @@
 import './Shop.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 function Item(props){
     return (<div key={props.id} onClick={()=>props.callback(props)}>
@@ -10,8 +10,11 @@ function Item(props){
     </div>);
 }
 export default function Shop(){
+        const name_ref= useRef(null);
+        const price_ref= useRef(null);
+        const img_ref= useRef(null);
         const [products,setProducts]=useState([]);
-        const URL="https://laughing-space-meme-jjjwx5qw4vxvfq5xj-5000.app.github.dev";
+        const URL="https://sturdy-adventure-wrrjw7gj9qpjcv6gq-5000.app.github.dev";
         useEffect(()=>{
             axios.get(URL+'/api/products')
             .then(response=>{
@@ -38,9 +41,30 @@ export default function Shop(){
         for(let i=0;i<cart.length;i++){
             totalprice+=cart[i].price;
         }
+
+        function addProduct(){
+            const data={
+                name:name_ref.current.value,
+                price:price_ref.current.value,
+                img:img_ref.current.value
+            }
+
+            alert(name_ref.current.vslue);
+            axios.post(URL+'/api/products',data)
+            .then(response=>{
+                setProducts(response.data);
+            })
+            .catch(error=>{
+                console.log("error");
+            });
+        }
         return (<>
+        name :<input type="text" ref={name_ref}/>
+        price :<input type="text" ref={price_ref}/>
+        img :<input type="text" ref={img_ref}/>
         <div className='grid-container'>{productList}</div>
         <h1>Cart</h1>
+        <button onClick={addProduct}>add</button>
         <button onClick={()=>setCart([])}>Clear all</button>
         <ol>{cartList}</ol>
         <h2>total price {totalprice} baht</h2>
