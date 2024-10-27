@@ -14,7 +14,7 @@ export default function Shop(){
         const price_ref= useRef(null);
         const img_ref= useRef(null);
         const [products,setProducts]=useState([]);
-        const URL="https://sturdy-adventure-wrrjw7gj9qpjcv6gq-5000.app.github.dev";
+        const URL="https://sturdy-adventure-wrrjw7gj9qpjcv6gq-3001.app.github.dev";
         useEffect(()=>{
             axios.get(URL+'/api/products')
             .then(response=>{
@@ -49,7 +49,7 @@ export default function Shop(){
                 img:img_ref.current.value
             }
 
-            alert(name_ref.current.vslue);
+            alert(name_ref.current.value);
             axios.post(URL+'/api/products',data)
             .then(response=>{
                 setProducts(response.data);
